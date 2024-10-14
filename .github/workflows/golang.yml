@@ -1,0 +1,40 @@
+name: Lint Golang
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - '.golangci.yml'
+      - '.github/workflows/golang.yml'
+  pull_request:
+    paths:
+      - '**.go'
+      - 'go.mod'
+      - '.golangci.yml'
+      - '.github/workflows/golang.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  golangci:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Install golangci-lint
+        run: |
+          version=$(grep golangci_version= ./Makefile | awk -F '=' '{print $2}')
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b /usr/bin $version
+      - name: Make build and lint
+        run: make lint
