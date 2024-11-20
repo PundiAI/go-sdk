@@ -1152,6 +1152,8 @@ github.com/prometheus/procfs v0.15.1/go.mod h1:fB45yRUv8NstnjriLhBQLuOUt+WW4BsoG
 github.com/prometheus/tsdb v0.7.1/go.mod h1:qhTCs0VvXwvX/y3TZrWD7rabWM+ijKTux40TwIPHuXU=
 github.com/pundiai/go-sdk v0.0.0-20241014034856-809fb70cce70 h1:mjrMNzwRxhxdu5Olw7MA2bWqe1ePr3zt1s1A3fee8Mk=
 github.com/pundiai/go-sdk v0.0.0-20241014034856-809fb70cce70/go.mod h1:VVuoMUack5C/mY/5XuTawt70DR3OA91savKmqH9aZQk=
+github.com/pundiai/go-sdk v0.0.0-20241120082158-22e53aa9f84a h1:2EZCh0720XPN4vuT2p4apvMnTUNDfCkIskd0pHEMLUQ=
+github.com/pundiai/go-sdk v0.0.0-20241120082158-22e53aa9f84a/go.mod h1:VVuoMUack5C/mY/5XuTawt70DR3OA91savKmqH9aZQk=
 github.com/rakyll/statik v0.1.7 h1:OF3QCZUuyPxuGEP7B4ypUa7sB/iHtqOTDYZXGM8KOdQ=
 github.com/rakyll/statik v0.1.7/go.mod h1:AlZONWzMtEnMs7W4e/1LURLiI49pIMmp6V9Unghqrcc=
 github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
