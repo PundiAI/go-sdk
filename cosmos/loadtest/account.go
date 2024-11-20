@@ -240,11 +240,11 @@ func newAccount(keyFile string, prefix string) (*Account, error) {
 func CreateGenesisAccounts(addrPrefix string, number int, outDir string) error {
 	entropy, err := bip39.NewEntropy(256)
 	if err != nil {
-		return nil
+		return err
 	}
 	mnemonic, err := bip39.NewMnemonic(entropy)
 	if err != nil {
-		return nil
+		return err
 	}
 	for i := 0; i < number; i++ {
 		bip44Params := hd.NewFundraiserParams(118, 0, 0)
