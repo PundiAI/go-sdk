@@ -62,6 +62,8 @@ func (a *Accounts) NextAccount() *Account {
 }
 
 func (a *Accounts) IsFistAccount() bool {
+	a.RLock()
+	defer a.RUnlock()
 	return a.cacheIndex == 1
 }
 
