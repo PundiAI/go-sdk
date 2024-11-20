@@ -24,8 +24,8 @@ func TestNewServer(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Millisecond)
 	defer cancel()
 	group, ctx := errgroup.WithContext(ctx)
-	err := server.Start(group, ctx)
-	assert.NoError(t, err)
+	err := server.Start(ctx, group)
+	require.NoError(t, err)
 
 	emitMetrics()
 

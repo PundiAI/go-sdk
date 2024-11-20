@@ -39,8 +39,8 @@ func (t *scheduler) Run(ctx context.Context) error {
 	}
 	t.logger.Infof("start %s service", t.config.Name)
 	errCount := uint16(0)
+	var sleepTime time.Duration
 	normalSleepTime := t.config.Interval
-	sleepTime := normalSleepTime
 	timer := time.NewTimer(normalSleepTime)
 	defer timer.Stop()
 	for {

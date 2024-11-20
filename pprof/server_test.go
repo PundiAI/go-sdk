@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/pundiai/go-sdk/log"
@@ -21,14 +22,14 @@ func TestNewServer(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Millisecond)
 	defer cancel()
 	group, ctx := errgroup.WithContext(ctx)
-	err := server.Start(group, ctx)
-	assert.NoError(t, err)
+	err := server.Start(ctx, group)
+	require.NoError(t, err)
 
 	resp, err := http.Get("http://" + config.ListenAddr + "/debug/pprof/")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
 	<-ctx.Done()
-	assert.NoError(t, server.Close())
-	assert.NoError(t, group.Wait())
+	require.NoError(t, server.Close())
+	require.NoError(t, group.Wait())
 }

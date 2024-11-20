@@ -8,26 +8,26 @@ func NewNopLogger() Logger {
 
 type nopLogger struct{}
 
-func (n *nopLogger) With(_, _ interface{}) Logger {
+func (n *nopLogger) With(_, _ any) Logger {
 	return n
 }
 
-func (n *nopLogger) Debug(_ string, _ ...interface{}) {}
+func (*nopLogger) Debug(_ string, _ ...any) {}
 
-func (n *nopLogger) Info(_ string, _ ...interface{}) {}
+func (*nopLogger) Info(_ string, _ ...any) {}
 
-func (n *nopLogger) Warn(_ string, _ ...interface{}) {}
+func (*nopLogger) Warn(_ string, _ ...any) {}
 
-func (n *nopLogger) Error(_ string, _ ...interface{}) {}
+func (*nopLogger) Error(_ string, _ ...any) {}
 
-func (n *nopLogger) Panic(_ string, _ ...interface{}) {}
+func (*nopLogger) Panic(_ string, _ ...any) {}
 
-func (n *nopLogger) Debugf(_ string, _ ...interface{}) {}
+func (*nopLogger) Debugf(_ string, _ ...any) {}
 
-func (n *nopLogger) Infof(_ string, _ ...interface{}) {}
+func (*nopLogger) Infof(_ string, _ ...any) {}
 
-func (n *nopLogger) Warnf(_ string, _ ...interface{}) {}
+func (*nopLogger) Warnf(_ string, _ ...any) {}
 
-func (n *nopLogger) Errorf(_ string, _ ...interface{}) {}
+func (*nopLogger) Errorf(_ string, _ ...any) {}
 
-func (n *nopLogger) Panicf(_ string, _ ...interface{}) {}
+func (*nopLogger) Panicf(_ string, _ ...any) {}

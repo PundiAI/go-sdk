@@ -2,18 +2,18 @@ package tool
 
 import "encoding/json"
 
-func MustItfToJsonStr(v interface{}) string {
-	if bts, err := json.Marshal(v); err != nil {
+func MustItfToJSONStr(v any) string {
+	bts, err := json.Marshal(v)
+	if err != nil {
 		panic(err)
-	} else {
-		return string(bts)
 	}
+	return string(bts)
 }
 
-func MustItfToJsonStrIndex(v interface{}) string {
-	if bts, err := json.MarshalIndent(v, "", "  "); err != nil {
+func MustItfToJSONStrIndex(v any) string {
+	bts, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
 		panic(err)
-	} else {
-		return string(bts)
 	}
+	return string(bts)
 }

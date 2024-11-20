@@ -8,7 +8,7 @@ import (
 
 type Server interface {
 	// Start service and keep the goroutine of the blocked
-	Start(group *errgroup.Group, ctx context.Context) error
+	Start(ctx context.Context, group *errgroup.Group) error
 	// Close service and release resources(e.g. http connect)
 	Close() error
 }

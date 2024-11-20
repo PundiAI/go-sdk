@@ -57,28 +57,28 @@ func (suite *SqliteTestSuite) SetupTest() {
 }
 
 func (suite *SqliteTestSuite) TestOpen() {
-	assert.NotNil(suite.T(), suite.driver.Open("coastdao.db"))
+	suite.NotNil(suite.driver.Open("coastdao.db"))
 }
 
 func (suite *SqliteTestSuite) TestOpen2() {
 	source := "${HOME}/.coastdao-keeper/coastdao-keeper.db"
 	suite.T().Log(os.ExpandEnv(source))
-	assert.NotNil(suite.T(), suite.driver.Open(os.ExpandEnv(source)))
+	suite.NotNil(suite.driver.Open(os.ExpandEnv(source)))
 }
 
 func (suite *SqliteTestSuite) TestGetDatabaseName() {
 	source := "coastdao.db"
-	assert.Equal(suite.T(), "coastdao", suite.driver.GetDatabaseName(source))
+	suite.Equal("coastdao", suite.driver.GetDatabaseName(source))
 
 	source = suite.T().TempDir() + "/coastdao.db"
-	assert.Equal(suite.T(), "coastdao", suite.driver.GetDatabaseName(source))
+	suite.Equal("coastdao", suite.driver.GetDatabaseName(source))
 }
 
 func (suite *SqliteTestSuite) TestCreateDB() {
 	source := suite.T().TempDir() + "/coastdao.db"
-	assert.NoError(suite.T(), suite.driver.CreateDB(log.NewNopLogger(), db.Config{Source: source}))
+	suite.Require().NoError(suite.driver.CreateDB(log.NewNopLogger(), db.Config{Source: source}))
 	defer func() {
-		assert.NoError(suite.T(), suite.driver.DropDB(log.NewNopLogger(), db.Config{Source: source}))
+		suite.Require().NoError(suite.driver.DropDB(log.NewNopLogger(), db.Config{Source: source}))
 	}()
 	stat, err := os.Stat(source)
 	suite.Require().NoError(err)

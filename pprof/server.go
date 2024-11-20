@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	_ "net/http/pprof"
+	_ "net/http/pprof" //nolint:gosec // for debug
 
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
@@ -30,7 +30,7 @@ func NewServer(logger log.Logger, config Config) *Server {
 	}
 }
 
-func (s *Server) Start(group *errgroup.Group, ctx context.Context) error {
+func (s *Server) Start(ctx context.Context, group *errgroup.Group) error {
 	if !s.config.Enabled {
 		return nil
 	}
@@ -43,13 +43,13 @@ func (s *Server) Start(group *errgroup.Group, ctx context.Context) error {
 	s.pprof = &http.Server{
 		Addr:              s.config.ListenAddr,
 		ReadHeaderTimeout: s.config.ReadTimeout,
-		BaseContext: func(listener net.Listener) context.Context {
+		BaseContext: func(net.Listener) context.Context {
 			return ctx
 		},
 	}
 
 	s.logger.Info("starting pprof server", "addr", fmt.Sprintf("http://%s", s.pprof.Addr))
-	s.pprof.BaseContext = func(listener net.Listener) context.Context {
+	s.pprof.BaseContext = func(net.Listener) context.Context {
 		return ctx
 	}
 	group.Go(func() error {

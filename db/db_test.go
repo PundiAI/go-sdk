@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"gorm.io/gorm"
 
@@ -24,36 +23,36 @@ func (suite *DBTestSuite) SetupTest() {
 }
 
 func (suite *DBTestSuite) TestExec() {
-	assert.Error(suite.T(), suite.db.Exec("123"))
+	suite.Require().Error(suite.db.Exec("123"))
 }
 
 func (suite *DBTestSuite) TestFirst() {
 	module := &gorm.Model{}
 	found, err := suite.db.First(module)
-	assert.NoError(suite.T(), err)
-	assert.False(suite.T(), found)
-	assert.NotNil(suite.T(), module)
+	suite.Require().NoError(err)
+	suite.False(found)
+	suite.NotNil(module)
 }
 
 func (suite *DBTestSuite) TestFirstWhere() {
 	found, err := suite.db.Where("id", 1).First(&gorm.Model{})
-	assert.NoError(suite.T(), err)
-	assert.False(suite.T(), found)
+	suite.Require().NoError(err)
+	suite.False(found)
 }
 
 func (suite *DBTestSuite) TestForWhere() {
 	for i := 0; i < 10; i++ {
 		found, err := suite.db.Where("id", 1).First(&gorm.Model{})
-		assert.NoError(suite.T(), err)
-		assert.False(suite.T(), found)
+		suite.Require().NoError(err)
+		suite.False(found)
 	}
 }
 
 func (suite *DBTestSuite) TestFind() {
 	modules := make([]gorm.Model, 0)
 	err := suite.db.Find(&modules)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), modules, 0)
+	suite.Require().NoError(err)
+	suite.Empty(modules)
 }
 
 func TestDBTestSuite(t *testing.T) {
@@ -70,13 +69,13 @@ func (suite *DBTestSuite) TestTransaction() {
 			name: "SUCCESS",
 			malloc: func(tx db.DB) error {
 				err := tx.Create(&gorm.Model{ID: 1})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 
 				err = tx.Create(&gorm.Model{ID: 2})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 
 				err = tx.Create(&gorm.Model{ID: 3})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 
 				return nil
 			},
@@ -86,13 +85,13 @@ func (suite *DBTestSuite) TestTransaction() {
 			name: "rollback",
 			malloc: func(tx db.DB) error {
 				err := tx.Create(&gorm.Model{ID: 4})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 
 				err = tx.Create(&gorm.Model{ID: 5})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 
 				err = tx.Create(&gorm.Model{ID: 6})
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 				return errors.New("rollback")
 			},
 			err: errors.New("rollback"),
@@ -100,32 +99,32 @@ func (suite *DBTestSuite) TestTransaction() {
 	}
 
 	for _, tt := range testCases {
-		suite.T().Run(tt.name, func(t *testing.T) {
+		suite.Run(tt.name, func() {
 			malloc := tt.malloc
 			err := suite.db.Transaction(malloc)
 			var found bool
 			if err == nil && tt.err == nil {
-				assert.NoError(suite.T(), err)
+				suite.Require().NoError(err)
 				found, err = suite.db.Where("id", 1).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.True(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.True(found)
 				found, err = suite.db.Where("id", 2).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.True(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.True(found)
 				found, err = suite.db.Where("id", 3).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.True(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.True(found)
 			} else {
-				assert.Error(suite.T(), err)
+				suite.Require().Error(err)
 				found, err = suite.db.Where("id", 4).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.False(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.False(found)
 				found, err = suite.db.Where("id", 5).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.False(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.False(found)
 				found, err = suite.db.Where("id", 6).First(&gorm.Model{})
-				assert.NoError(suite.T(), err)
-				assert.False(suite.T(), found)
+				suite.Require().NoError(err)
+				suite.False(found)
 			}
 		})
 	}

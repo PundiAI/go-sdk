@@ -29,7 +29,7 @@ refresh_metric_interval: 15s
 
 func (suite *ConfigTestSuite) TestCheck() {
 	config := db.NewDefConfig()
-	suite.NoError(config.Check())
+	suite.Require().NoError(config.Check())
 
 	config.Driver = ""
 	suite.EqualError(config.Check(), "check: driver is empty")

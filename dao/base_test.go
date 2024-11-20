@@ -20,7 +20,7 @@ type TestModel struct {
 	Number uint64 `gorm:"column:number; type:bigint(20);not null;comment:block number"`
 }
 
-func (v *TestModel) TableName() string {
+func (*TestModel) TableName() string {
 	return "test_model"
 }
 
@@ -99,7 +99,7 @@ func (s *DaoTestSuite) TestNoTransaction() {
 		data := NewTestModel("test", 100)
 		var txErr error
 		defer func() {
-			s.Require().NotNil(txErr)
+			s.Require().Error(txErr)
 			s.Require().EqualError(txErr, "db create error: UNIQUE constraint failed: test_model.name")
 		}()
 		if txErr = s.baseDao.Insert(data); txErr != nil {

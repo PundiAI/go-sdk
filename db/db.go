@@ -18,27 +18,27 @@ import (
 )
 
 type DB interface {
-	Model(value interface{}) DB
-	Where(query interface{}, args ...interface{}) DB
+	Model(value any) DB
+	Where(query any, args ...any) DB
 	Limit(limit int) DB
 	Scopes(funcs ...func(DB) DB) DB
 	Offset(offset int) DB
-	Order(value interface{}) DB
+	Order(value any) DB
 	Count(count *int64) DB
 	Group(query string) DB
 	RowsAffected(number int64) DB
 
-	Select(query interface{}, args ...interface{}) DB
-	Distinct(args ...interface{}) DB
-	Find(dest interface{}, conds ...interface{}) (err error)
-	First(dest interface{}, conds ...interface{}) (found bool, err error)
-	MustFirst(dest interface{}, conds ...interface{}) (err error)
+	Select(query any, args ...any) DB
+	Distinct(args ...any) DB
+	Find(dest any, conds ...any) (err error)
+	First(dest any, conds ...any) (found bool, err error)
+	MustFirst(dest any, conds ...any) (err error)
 
-	Exec(sql string, values ...interface{}) error
+	Exec(sql string, values ...any) error
 
-	Create(value interface{}) error
-	Update(column string, value interface{}) error
-	Updates(values interface{}) error
+	Create(value any) error
+	Update(column string, value any) error
+	Updates(values any) error
 
 	Transaction(fn func(tx DB) error) error
 
@@ -46,7 +46,7 @@ type DB interface {
 	Commit() error
 	Rollback() error
 
-	AutoMigrate(dst ...interface{}) error
+	AutoMigrate(dst ...any) error
 
 	GetSource() string
 	GetDriver() Driver
@@ -193,11 +193,11 @@ func (g *gDB) WithContext(ctx context.Context) DB {
 	return g.copy(g.db.WithContext(ctx))
 }
 
-func (g *gDB) Model(value interface{}) DB {
+func (g *gDB) Model(value any) DB {
 	return g.copy(g.db.Model(value))
 }
 
-func (g *gDB) Where(query interface{}, args ...interface{}) DB {
+func (g *gDB) Where(query any, args ...any) DB {
 	return g.copy(g.db.Where(query, args...))
 }
 
@@ -218,7 +218,7 @@ func (g *gDB) Offset(offset int) DB {
 	return g.copy(g.db.Offset(offset))
 }
 
-func (g *gDB) Order(value interface{}) DB {
+func (g *gDB) Order(value any) DB {
 	return g.copy(g.db.Order(value))
 }
 
@@ -230,15 +230,15 @@ func (g *gDB) Group(query string) DB {
 	return g.copy(g.db.Group(query))
 }
 
-func (g *gDB) Distinct(args ...interface{}) DB {
+func (g *gDB) Distinct(args ...any) DB {
 	return g.copy(g.db.Distinct(args...))
 }
 
-func (g *gDB) Select(query interface{}, args ...interface{}) DB {
+func (g *gDB) Select(query any, args ...any) DB {
 	return g.copy(g.db.Select(query, args...))
 }
 
-func (g *gDB) Find(dest interface{}, conds ...interface{}) error {
+func (g *gDB) Find(dest any, conds ...any) error {
 	err := g.db.Find(dest, conds...).Error
 	if err != nil {
 		g.logger.Error("db find error", "dest", dest, "conds", conds, "error", err)
@@ -247,7 +247,7 @@ func (g *gDB) Find(dest interface{}, conds ...interface{}) error {
 	return nil
 }
 
-func (g *gDB) First(dest interface{}, conds ...interface{}) (bool, error) {
+func (g *gDB) First(dest any, conds ...any) (bool, error) {
 	err := g.db.First(dest, conds...).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -259,7 +259,7 @@ func (g *gDB) First(dest interface{}, conds ...interface{}) (bool, error) {
 	return true, nil
 }
 
-func (g *gDB) MustFirst(dest interface{}, conds ...interface{}) error {
+func (g *gDB) MustFirst(dest any, conds ...any) error {
 	return errors.Wrap(g.db.First(dest, conds...).Error, "db must first error")
 }
 
@@ -281,7 +281,7 @@ func (g *gDB) Rollback() error {
 	return g.db.Rollback().Error
 }
 
-func (g *gDB) Create(value interface{}) error {
+func (g *gDB) Create(value any) error {
 	tx := g.db.Create(value)
 	if err := tx.Error; err != nil {
 		g.logger.Error("db create error", "value", value, "error", err)
@@ -294,7 +294,7 @@ func (g *gDB) Create(value interface{}) error {
 	return nil
 }
 
-func (g *gDB) Update(column string, value interface{}) error {
+func (g *gDB) Update(column string, value any) error {
 	tx := g.db.Update(column, value)
 	if err := tx.Error; err != nil {
 		g.logger.Error("db update error", "column", column, "value", value, "error", err)
@@ -307,7 +307,7 @@ func (g *gDB) Update(column string, value interface{}) error {
 	return nil
 }
 
-func (g *gDB) Updates(values interface{}) error {
+func (g *gDB) Updates(values any) error {
 	tx := g.db.Updates(values)
 	if err := tx.Error; err != nil {
 		g.logger.Error("db updates error", "values", values, "error", err)
@@ -320,7 +320,7 @@ func (g *gDB) Updates(values interface{}) error {
 	return nil
 }
 
-func (g *gDB) Exec(sql string, values ...interface{}) error {
+func (g *gDB) Exec(sql string, values ...any) error {
 	if err := g.db.Exec(sql, values...).Error; err != nil {
 		g.logger.Error("db exec error", "sql", sql, "values", values, "error", err)
 		return errors.Wrap(err, "db exec error")
@@ -328,7 +328,7 @@ func (g *gDB) Exec(sql string, values ...interface{}) error {
 	return nil
 }
 
-func (g *gDB) AutoMigrate(dst ...interface{}) error {
+func (g *gDB) AutoMigrate(dst ...any) error {
 	return g.db.Transaction(func(tx *gorm.DB) error {
 		for key, value := range g.driver.MigrateOptions() {
 			tx = tx.Set(key, value)

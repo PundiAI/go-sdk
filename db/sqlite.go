@@ -29,7 +29,7 @@ type Sqlite struct {
 	name string
 }
 
-func (s *Sqlite) Open(source string) gorm.Dialector {
+func (*Sqlite) Open(source string) gorm.Dialector {
 	if err := os.MkdirAll(filepath.Dir(source), os.ModePerm); err != nil {
 		panic(err)
 	}
@@ -60,7 +60,7 @@ func (s *Sqlite) GetDatabaseName(source string) string {
 	return s.name
 }
 
-func (s *Sqlite) CreateDB(logger log.Logger, config Config) error {
+func (*Sqlite) CreateDB(logger log.Logger, config Config) error {
 	if err := os.MkdirAll(config.Source, os.ModePerm); err != nil {
 		return errors.Wrap(err, "sqlite: create db error")
 	}
@@ -68,7 +68,7 @@ func (s *Sqlite) CreateDB(logger log.Logger, config Config) error {
 	return nil
 }
 
-func (s *Sqlite) DropDB(logger log.Logger, config Config) error {
+func (*Sqlite) DropDB(logger log.Logger, config Config) error {
 	if err := os.RemoveAll(config.Source); err != nil {
 		return errors.Wrap(err, "sqlite: drop db error")
 	}
@@ -76,15 +76,15 @@ func (s *Sqlite) DropDB(logger log.Logger, config Config) error {
 	return nil
 }
 
-func (s *Sqlite) MigrateOptions() map[string]string {
+func (*Sqlite) MigrateOptions() map[string]string {
 	return map[string]string{}
 }
 
-func (s *Sqlite) GetMigrationsDriver() (source.Driver, error) {
+func (*Sqlite) GetMigrationsDriver() (source.Driver, error) {
 	return GetMigrationsDriver(SqliteDriver)
 }
 
-func (s *Sqlite) ToMigrateDriver(source string) (string, database.Driver, error) {
+func (*Sqlite) ToMigrateDriver(source string) (string, database.Driver, error) {
 	db, err := sql.Open("sqlite3", source)
 	if err != nil {
 		return "", nil, errors.Wrap(err, "sqlite: open error")
