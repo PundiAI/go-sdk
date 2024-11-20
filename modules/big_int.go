@@ -10,7 +10,7 @@ var _ CustomType = (*BigInt)(nil)
 
 type BigInt big.Int
 
-func (b *BigInt) Scan(value interface{}) error {
+func (b *BigInt) Scan(value any) error {
 	str, err := unquoteIfQuoted(value)
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ func NewBigInt(value *big.Int) *BigInt {
 	return (*BigInt)(value)
 }
 
-func unquoteIfQuoted(value interface{}) (string, error) {
+func unquoteIfQuoted(value any) (string, error) {
 	var bytes []byte
 	switch v := value.(type) {
 	case string:

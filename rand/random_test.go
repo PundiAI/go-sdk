@@ -14,20 +14,20 @@ import (
 func TestRandStr(t *testing.T) {
 	l := 243
 	s := Str(l)
-	assert.Equal(t, l, len(s))
+	assert.Len(t, s, l)
 }
 
 func TestRandBytes(t *testing.T) {
 	l := 243
 	b := Bytes(l)
-	assert.Equal(t, l, len(b))
+	assert.Len(t, b, l)
 }
 
 func TestRandIntn(t *testing.T) {
 	n := 243
 	for i := 0; i < 100; i++ {
 		x := Intn(n)
-		assert.True(t, x < n)
+		assert.Less(t, x, n)
 	}
 }
 
@@ -68,7 +68,7 @@ func testThemAll() string {
 	return out.String()
 }
 
-func TestRngConcurrencySafety(t *testing.T) {
+func TestRngConcurrencySafety(*testing.T) {
 	var wg sync.WaitGroup
 	for i := 0; i < 100; i++ {
 		wg.Add(1)

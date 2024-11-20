@@ -80,7 +80,7 @@ func (d *BaseDao) BeginTx(ctx context.Context) context.Context {
 	return context.WithValue(ctx, keyTx, d.db.Begin())
 }
 
-func (d *BaseDao) CommitTx(ctx context.Context) error {
+func (*BaseDao) CommitTx(ctx context.Context) error {
 	tx, canOperator := hasOperatorTx(ctx)
 	if !canOperator {
 		return nil
@@ -88,7 +88,7 @@ func (d *BaseDao) CommitTx(ctx context.Context) error {
 	return tx.Commit()
 }
 
-func (d *BaseDao) RollbackTx(ctx context.Context) error {
+func (*BaseDao) RollbackTx(ctx context.Context) error {
 	tx, canOperator := hasOperatorTx(ctx)
 	if !canOperator {
 		return nil

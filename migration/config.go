@@ -26,10 +26,10 @@ func (c Config) IsEnabled() bool {
 	return c.Enabled
 }
 
-func (c Config) Check() error {
+func (Config) Check() error {
 	return nil
 }
 
-func (c Config) Name() string {
+func (Config) Name() string {
 	return "migration"
 }

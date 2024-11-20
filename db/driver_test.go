@@ -8,7 +8,7 @@ import (
 )
 
 func TestRegisterDriver(t *testing.T) {
-	assert.Equal(t, 2, len(drivers))
+	assert.Len(t, drivers, 2)
 }
 
 func TestGetDriver(t *testing.T) {

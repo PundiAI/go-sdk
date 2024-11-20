@@ -15,7 +15,7 @@ func init() {
 	zerolog.TimeFieldFormat = TimeFieldFormat
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	zerolog.CallerSkipFrameCount = 3
-	zerolog.CallerMarshalFunc = func(pc uintptr, file string, line int) string {
+	zerolog.CallerMarshalFunc = func(_ uintptr, file string, line int) string {
 		if parts := strings.Split(file, "/"); len(parts) > 2 && parts[0] == "github.com" {
 			return strings.Join(parts[3:], "/") + ":" + strconv.Itoa(line)
 		}
@@ -30,59 +30,59 @@ type ZeroLogger struct {
 }
 
 func NewZeroLogger(format, logLevel string) (Logger, error) {
-	logger, err := newZeroLogger(format, logLevel)
+	logger, err := newZeroLog(format, logLevel)
 	if err != nil {
 		return nil, errors.Wrapf(err, "new zero logger failed, format: %s, log level: %s", format, logLevel)
 	}
 	return &ZeroLogger{logger: logger}, nil
 }
 
-func (l *ZeroLogger) With(k, v interface{}) Logger {
-	logger := l.logger.With().Fields([]interface{}{k, v}).Logger()
+func (l *ZeroLogger) With(k, v any) Logger {
+	logger := l.logger.With().Fields([]any{k, v}).Logger()
 	return &ZeroLogger{logger: &logger}
 }
 
-func (l *ZeroLogger) Debug(msg string, args ...interface{}) {
+func (l *ZeroLogger) Debug(msg string, args ...any) {
 	l.logger.Debug().Fields(args).Msg(msg)
 }
 
-func (l *ZeroLogger) Info(msg string, args ...interface{}) {
+func (l *ZeroLogger) Info(msg string, args ...any) {
 	l.logger.Info().Fields(args).Msg(msg)
 }
 
-func (l *ZeroLogger) Warn(msg string, args ...interface{}) {
+func (l *ZeroLogger) Warn(msg string, args ...any) {
 	l.logger.Warn().Fields(args).Msg(msg)
 }
 
-func (l *ZeroLogger) Error(msg string, args ...interface{}) {
+func (l *ZeroLogger) Error(msg string, args ...any) {
 	l.logger.Error().Fields(args).Msg(msg)
 }
 
-func (l *ZeroLogger) Panic(msg string, args ...interface{}) {
+func (l *ZeroLogger) Panic(msg string, args ...any) {
 	l.logger.Panic().Fields(args).Msg(msg)
 }
 
-func (l *ZeroLogger) Debugf(format string, args ...interface{}) {
+func (l *ZeroLogger) Debugf(format string, args ...any) {
 	l.logger.Debug().Msgf(format, args...)
 }
 
-func (l *ZeroLogger) Infof(format string, args ...interface{}) {
+func (l *ZeroLogger) Infof(format string, args ...any) {
 	l.logger.Info().Msgf(format, args...)
 }
 
-func (l *ZeroLogger) Warnf(format string, args ...interface{}) {
+func (l *ZeroLogger) Warnf(format string, args ...any) {
 	l.logger.Warn().Msgf(format, args...)
 }
 
-func (l *ZeroLogger) Errorf(format string, args ...interface{}) {
+func (l *ZeroLogger) Errorf(format string, args ...any) {
 	l.logger.Error().Msgf(format, args...)
 }
 
-func (l *ZeroLogger) Panicf(format string, args ...interface{}) {
+func (l *ZeroLogger) Panicf(format string, args ...any) {
 	l.logger.Panic().Msgf(format, args...)
 }
 
-func newZeroLogger(format, logLevel string) (*zerolog.Logger, error) {
+func newZeroLog(format, logLevel string) (*zerolog.Logger, error) {
 	level, err := zerolog.ParseLevel(logLevel)
 	if err != nil {
 		return nil, err

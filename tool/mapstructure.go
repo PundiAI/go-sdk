@@ -22,7 +22,7 @@ func ComposeDecodeHookFunc(fs ...mapstructure.DecodeHookFunc) mapstructure.Decod
 }
 
 func StringToBigIntHookFunc() mapstructure.DecodeHookFunc {
-	return func(f, t reflect.Type, data interface{}) (interface{}, error) {
+	return func(f, t reflect.Type, data any) (any, error) {
 		if f.Kind() != reflect.String {
 			return data, nil
 		}
@@ -38,7 +38,7 @@ func StringToBigIntHookFunc() mapstructure.DecodeHookFunc {
 }
 
 func StringToAddressHookFunc() mapstructure.DecodeHookFunc {
-	return func(f, t reflect.Type, data interface{}) (interface{}, error) {
+	return func(f, t reflect.Type, data any) (any, error) {
 		if f.Kind() != reflect.String {
 			return data, nil
 		}
@@ -50,7 +50,7 @@ func StringToAddressHookFunc() mapstructure.DecodeHookFunc {
 }
 
 func StringToDecimalHookFunc() mapstructure.DecodeHookFunc {
-	return func(f, t reflect.Type, data interface{}) (interface{}, error) {
+	return func(f, t reflect.Type, data any) (any, error) {
 		if t != reflect.TypeOf(decimal.Decimal{}) {
 			return data, nil
 		}

@@ -21,11 +21,11 @@ func (suite *ConfigTestSuite) TestNewDefConfig() {
 
 func (suite *ConfigTestSuite) TestCheck() {
 	config := eth.NewDefConfig()
-	suite.EqualError(config.Check(), "check: chain_id is empty")
+	suite.Require().EqualError(config.Check(), "check: chain_id is empty")
 
 	config.ChainId = big.NewInt(1)
 	config.RpcUrl = ""
-	suite.EqualError(config.Check(), "check: rpc_url is empty")
+	suite.Require().EqualError(config.Check(), "check: rpc_url is empty")
 }
 
 func TestConfigTestSuite(t *testing.T) {

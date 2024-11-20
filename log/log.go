@@ -21,26 +21,24 @@ const (
 )
 
 var (
-	NewLoggerFunc newLogger = NewZeroLogger
+	NewLoggerFunc           = NewZeroLogger
 	DefaultWriter io.Writer = os.Stdout
 )
 
-type newLogger func(format, logLevel string) (Logger, error)
-
 type Logger interface {
-	With(k, v interface{}) Logger
+	With(k, v any) Logger
 
-	Debug(msg string, args ...interface{})
-	Info(msg string, args ...interface{})
-	Warn(msg string, args ...interface{})
-	Error(msg string, args ...interface{})
-	Panic(msg string, args ...interface{})
+	Debug(msg string, args ...any)
+	Info(msg string, args ...any)
+	Warn(msg string, args ...any)
+	Error(msg string, args ...any)
+	Panic(msg string, args ...any)
 
-	Debugf(format string, args ...interface{})
-	Infof(format string, args ...interface{})
-	Warnf(format string, args ...interface{})
-	Errorf(format string, args ...interface{})
-	Panicf(format string, args ...interface{})
+	Debugf(format string, args ...any)
+	Infof(format string, args ...any)
+	Warnf(format string, args ...any)
+	Errorf(format string, args ...any)
+	Panicf(format string, args ...any)
 }
 
 func NewLogger(format, logLevel string) (Logger, error) {

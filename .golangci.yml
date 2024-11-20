@@ -2,49 +2,48 @@ run:
   timeout: 5m
   tests: true
   go: '1.22'
+  allow-parallel-runners: true
 
 linters:
   disable-all: true
   enable:
-    - dogsled
-    - errcheck
-    - errorlint
-    - copyloopvar
-    - gci
-    - goconst
-    - gocritic
     - gofumpt
+    - unconvert
+    - unparam
+    - stylecheck
+    - gocyclo
+    - errorlint
+    - prealloc
+    - gocritic
+    - gci
+    - dogsled
     - gosec
+    - errcheck
+    - goconst
     - gosimple
     - govet
     - ineffassign
     - misspell
     - nakedret
     - nolintlint
-    - revive
     - staticcheck
-    - stylecheck
-    - thelper
+    - revive
     - typecheck
-    - unconvert
     - unused
+    - thelper
+    - copyloopvar
+    - wastedassign
+    - testifylint
 
 linters-settings:
+  staticcheck:
+    checks: [ "all", "-SA1019" ]
   stylecheck:
     checks: [ "all", "-ST1003" ]
   gocyclo:
     min-complexity: 15
-  govet:
-    disable:
-      - loopclosure
-  gosec:
-    excludes: [ "G108", "G115" ]
-    exclude-generated: true
-    confidence: medium
-  revive:
-    rules:
-      - name: redefines-builtin-id
-        disabled: true
+  gocritic:
+    disabled-checks: [ "assignOp", "ifElseChain", "appendAssign" ]
   misspell:
     locale: US
   gofumpt:
@@ -57,8 +56,8 @@ linters-settings:
     require-specific: false
   gosimple:
     checks: [ "all" ]
-  staticcheck:
-    checks: [ "all", "-SA1019" ]
+  gosec:
+    excludes: [ "G115" ]
   gci:
     custom-order: true
     sections:
@@ -68,3 +67,31 @@ linters-settings:
   errcheck:
     check-type-assertions: false
     check-blank: false
+  unused:
+    field-writes-are-uses: false
+    exported-fields-are-used: false
+    local-variables-are-used: false
+  revive:
+    # https://golangci-lint.run/usage/linters/#revive
+    enable-all-rules: true
+    # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
+    rules:
+      - name: line-length-limit
+        disabled: true
+      - name: add-constant
+        disabled: true
+      - name: cognitive-complexity
+        disabled: true
+      - name: function-length
+        disabled: true
+      - name: var-naming
+        arguments:
+          - [ "ID", "IDS", "URL", "JSON", "RPC" ] # AllowList
+          - [ "" ] # DenyList
+          - - upperCaseConst: true
+      - name: unhandled-error
+        arguments:
+          - "fmt.Print"
+          - "fmt.Println"
+      - name: import-shadowing
+        disabled: true
