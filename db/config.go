@@ -35,7 +35,7 @@ type Config struct {
 func NewDefConfig() Config {
 	return Config{
 		Driver:          SqliteDriver,
-		Source:          os.ExpandEnv("$HOME/.coastdao/coastdao.db"),
+		Source:          os.ExpandEnv("$HOME/.my/my.db"),
 		ConnMaxIdleTime: time.Hour,
 		ConnMaxLifeTime: time.Hour,
 		MaxIdleConn:     10,

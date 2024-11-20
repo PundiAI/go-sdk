@@ -49,9 +49,6 @@ func (s *Server) Start(ctx context.Context, group *errgroup.Group) error {
 	}
 
 	s.logger.Info("starting pprof server", "addr", fmt.Sprintf("http://%s", s.pprof.Addr))
-	s.pprof.BaseContext = func(net.Listener) context.Context {
-		return ctx
-	}
 	group.Go(func() error {
 		if err := s.pprof.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			s.logger.Error("pprof HTTP server listen", "error", err)

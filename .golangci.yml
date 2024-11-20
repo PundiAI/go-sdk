@@ -81,9 +81,7 @@ linters-settings:
       - name: add-constant
         disabled: true
       - name: cognitive-complexity
-        disabled: false
-        exclude:
-          - "**_test.go"
+        disabled: true
       - name: function-length
         disabled: true
       - name: var-naming
@@ -96,6 +94,4 @@ linters-settings:
           - "fmt.Print"
           - "fmt.Println"
       - name: import-shadowing
-        disabled: true
-      - name: cognitive-complexity
         disabled: true

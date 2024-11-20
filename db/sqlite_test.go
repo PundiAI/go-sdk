@@ -20,7 +20,7 @@ func TestSqlite_CheckSource(t *testing.T) {
 	}{
 		{
 			name:    "test1",
-			source:  "coastdao.db",
+			source:  "my.db",
 			wantErr: assert.NoError,
 		},
 		{
@@ -30,12 +30,12 @@ func TestSqlite_CheckSource(t *testing.T) {
 		},
 		{
 			name:    "test3",
-			source:  "coastdao",
+			source:  "my",
 			wantErr: assert.Error,
 		},
 		{
 			name:    "test4",
-			source:  "file:coastdao.db?mode=memory",
+			source:  "file:my.db?mode=memory",
 			wantErr: assert.NoError,
 		},
 	}
@@ -57,25 +57,25 @@ func (suite *SqliteTestSuite) SetupTest() {
 }
 
 func (suite *SqliteTestSuite) TestOpen() {
-	suite.NotNil(suite.driver.Open("coastdao.db"))
+	suite.NotNil(suite.driver.Open("my.db"))
 }
 
 func (suite *SqliteTestSuite) TestOpen2() {
-	source := "${HOME}/.coastdao-keeper/coastdao-keeper.db"
+	source := "${HOME}/.my/my.db"
 	suite.T().Log(os.ExpandEnv(source))
 	suite.NotNil(suite.driver.Open(os.ExpandEnv(source)))
 }
 
 func (suite *SqliteTestSuite) TestGetDatabaseName() {
-	source := "coastdao.db"
-	suite.Equal("coastdao", suite.driver.GetDatabaseName(source))
+	source := "my.db"
+	suite.Equal("my", suite.driver.GetDatabaseName(source))
 
-	source = suite.T().TempDir() + "/coastdao.db"
-	suite.Equal("coastdao", suite.driver.GetDatabaseName(source))
+	source = suite.T().TempDir() + "/my.db"
+	suite.Equal("my", suite.driver.GetDatabaseName(source))
 }
 
 func (suite *SqliteTestSuite) TestCreateDB() {
-	source := suite.T().TempDir() + "/coastdao.db"
+	source := suite.T().TempDir() + "/my.db"
 	suite.Require().NoError(suite.driver.CreateDB(log.NewNopLogger(), db.Config{Source: source}))
 	defer func() {
 		suite.Require().NoError(suite.driver.DropDB(log.NewNopLogger(), db.Config{Source: source}))
@@ -84,7 +84,7 @@ func (suite *SqliteTestSuite) TestCreateDB() {
 	suite.Require().NoError(err)
 	suite.Require().NotNil(stat)
 	suite.True(stat.IsDir())
-	suite.Equal("coastdao.db", stat.Name())
+	suite.Equal("my.db", stat.Name())
 }
 
 func TestSqliteTestSuite(t *testing.T) {
