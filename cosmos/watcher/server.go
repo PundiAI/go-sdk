@@ -66,7 +66,7 @@ func (s *Server) Init(ctx context.Context, db db.DB) (err error) {
 	return nil
 }
 
-func (s *Server) Start(group *errgroup.Group, ctx context.Context) (err error) {
+func (s *Server) Start(ctx context.Context, group *errgroup.Group) (err error) {
 	if !s.config.Enabled {
 		return nil
 	}

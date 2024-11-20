@@ -38,7 +38,7 @@ func (b *BaseInfo) GetDenom() string {
 }
 
 func (b *BaseInfo) BuildTx(account *Account, msgs []types.Msg) ([]byte, error) {
-	if b.Accounts.IsFistAccount() {
+	if b.Accounts.IsFirstAccount() {
 		b.GasLimit--
 	}
 	txRaw, err := client.BuildTxRaw(

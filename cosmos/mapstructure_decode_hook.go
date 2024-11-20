@@ -11,7 +11,7 @@ import (
 // CustomDecodeHook is a custom decode hook for mapstructure
 func CustomDecodeHook() mapstructure.DecodeHookFunc {
 	return mapstructure.ComposeDecodeHookFunc(
-		func(f reflect.Type, t reflect.Type, data interface{}) (interface{}, error) {
+		func(f reflect.Type, t reflect.Type, data any) (any, error) {
 			if f.Kind() != reflect.String {
 				return data, nil
 			}
@@ -20,7 +20,7 @@ func CustomDecodeHook() mapstructure.DecodeHookFunc {
 			}
 			return types.ParseCoinNormalized(data.(string))
 		},
-		func(f reflect.Type, t reflect.Type, data interface{}) (interface{}, error) {
+		func(f reflect.Type, t reflect.Type, data any) (any, error) {
 			if f.Kind() != reflect.String {
 				return data, nil
 			}
@@ -29,7 +29,7 @@ func CustomDecodeHook() mapstructure.DecodeHookFunc {
 			}
 			return tx.BroadcastMode_value[data.(string)], nil
 		},
-		func(f reflect.Type, t reflect.Type, data interface{}) (interface{}, error) {
+		func(f reflect.Type, t reflect.Type, data any) (any, error) {
 			if f.Kind() != reflect.String {
 				return data, nil
 			}

@@ -25,7 +25,7 @@ func TestNewServer(t *testing.T) {
 	group, ctx := errgroup.WithContext(ctx)
 
 	server.client = MockRpcClient{}
-	assert.NoError(t, server.Start(group, ctx))
+	assert.NoError(t, server.Start(ctx, group))
 
 	<-ctx.Done()
 	assert.NoError(t, server.Close())
