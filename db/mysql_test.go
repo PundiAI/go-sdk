@@ -15,7 +15,7 @@ func TestMysql_CheckSource(t *testing.T) {
 	}{
 		{
 			name:    "test1",
-			source:  "root:root@tcp(127.0.0.1:3306)/coastdao?charset=utf8mb4&parseTime=True&loc=Local",
+			source:  "root:root@tcp(127.0.0.1:3306)/my?charset=utf8mb4&parseTime=True&loc=Local",
 			wantErr: assert.NoError,
 		},
 		{
@@ -25,7 +25,7 @@ func TestMysql_CheckSource(t *testing.T) {
 		},
 		{
 			name:    "test3",
-			source:  "coastdao",
+			source:  "my",
 			wantErr: assert.Error,
 		},
 	}

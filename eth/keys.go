@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func NewPrivKeyFromKeyStore(keystoreFile, passwordFile string, needPass bool) (*ecdsa.PrivateKey, error) {
+func NewPrivKeyFromKeyStore(keystoreFile, passwordFile string, needPass bool) (*ecdsa.PrivateKey, error) { //nolint:revive // flag-parameter
 	keyJson, err := os.ReadFile(keystoreFile)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("failed to read the keyfile at %s", keystoreFile))

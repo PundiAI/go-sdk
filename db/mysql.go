@@ -39,7 +39,7 @@ func (m *Mysql) ToMigrateDriver(source string) (string, database.Driver, error) 
 	return m.GetDatabaseName(source), driver, nil
 }
 
-func (m *Mysql) Open(source string) gorm.Dialector {
+func (*Mysql) Open(source string) gorm.Dialector {
 	return mysql.Open(source)
 }
 
@@ -122,11 +122,11 @@ func (m *Mysql) DropDB(logger log.Logger, config Config) error {
 	return nil
 }
 
-func (m *Mysql) GetMigrationsDriver() (source.Driver, error) {
+func (*Mysql) GetMigrationsDriver() (source.Driver, error) {
 	return GetMigrationsDriver(MysqlDriver)
 }
 
-func (m *Mysql) MigrateOptions() map[string]string {
+func (*Mysql) MigrateOptions() map[string]string {
 	return map[string]string{
 		"gorm:table_options": "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 	}

@@ -33,7 +33,7 @@ func Test_scheduler_Run(t1 *testing.T) {
 					Interval:    100 * time.Millisecond,
 					MaxErrCount: 1,
 				},
-				exec: func(ctx context.Context) error {
+				exec: func(context.Context) error {
 					return nil
 				},
 			},
@@ -52,7 +52,7 @@ func Test_scheduler_Run(t1 *testing.T) {
 					Interval:    50 * time.Millisecond,
 					MaxErrCount: 2,
 				},
-				exec: func(ctx context.Context) error {
+				exec: func(context.Context) error {
 					return assert.AnError
 				},
 			},

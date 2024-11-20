@@ -35,7 +35,7 @@ type Config struct {
 func NewDefConfig() Config {
 	return Config{
 		Driver:          SqliteDriver,
-		Source:          os.ExpandEnv("$HOME/.coastdao/coastdao.db"),
+		Source:          os.ExpandEnv("$HOME/.my/my.db"),
 		ConnMaxIdleTime: time.Hour,
 		ConnMaxLifeTime: time.Hour,
 		MaxIdleConn:     10,
@@ -55,7 +55,7 @@ func (c Config) String() string {
 	return string(out)
 }
 
-func (c Config) MarshalYAML() (interface{}, error) {
+func (c Config) MarshalYAML() (any, error) {
 	type marshalConfig Config
 	temp := marshalConfig(c)
 	temp.Source = SourceDesensitization(temp.Source)
@@ -68,7 +68,7 @@ func (c Config) MarshalJSON() ([]byte, error) {
 	return json.Marshal(temp)
 }
 
-func (c Config) Check() error {
+func (c Config) Check() error { //nolint:revive // cyclomatic
 	if c.Driver == "" {
 		return errors.New("check: driver is empty")
 	}

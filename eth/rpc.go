@@ -58,7 +58,7 @@ func NewRPCClient(ctx context.Context, logger log.Logger, config Config) (RPCCli
 
 type client struct {
 	*ethclient.Client
-	logger log.Logger
+	logger log.Logger //nolint:unused // for debug
 	config Config
 }
 

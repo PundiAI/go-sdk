@@ -44,7 +44,7 @@ func NewServer(logger log.Logger, config Config) *Server {
 	}
 }
 
-func (s *Server) Start(group *errgroup.Group, ctx context.Context) error {
+func (s *Server) Start(ctx context.Context, group *errgroup.Group) error { //nolint:revive // cyclomatic
 	if !s.config.Enabled {
 		return nil
 	}
@@ -87,7 +87,7 @@ func (s *Server) Start(group *errgroup.Group, ctx context.Context) error {
 				promhttp.HandlerOpts{MaxRequestsInFlight: s.config.MaxOpenConnections},
 			),
 		),
-		BaseContext: func(listener net.Listener) context.Context {
+		BaseContext: func(net.Listener) context.Context {
 			return ctx
 		},
 	}

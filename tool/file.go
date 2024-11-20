@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func LoadJSONFile(path string, data interface{}) error {
+func LoadJSONFile(path string, data any) error {
 	filePtr, err := os.Open(path)
 	if err != nil {
 		return err

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/pundiai/go-sdk/log"
 )
@@ -14,7 +15,7 @@ func TestZeroLogger_Console(t *testing.T) {
 	log.DefaultWriter = output
 
 	logger, err := log.NewZeroLogger(log.FormatConsole, log.LevelInfo)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, logger)
 	logger.Info("test")
 	assert.Contains(t, output.String(), "test")
@@ -26,7 +27,7 @@ func TestZeroLogger_JSON(t *testing.T) {
 	log.DefaultWriter = output
 
 	logger, err := log.NewZeroLogger(log.FormatJSON, log.LevelInfo)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, logger)
 	logger.Info("test")
 	assert.Contains(t, output.String(), "test")
@@ -35,7 +36,7 @@ func TestZeroLogger_JSON(t *testing.T) {
 
 func TestZeroLogger_Nil(t *testing.T) {
 	logger, err := log.NewZeroLogger(log.FormatConsole, log.LevelInfo)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	logger.Info("test", "error", nil)
 }
 
@@ -44,7 +45,7 @@ func TestZeroLogger_With(t *testing.T) {
 	log.DefaultWriter = output
 
 	logger, err := log.NewZeroLogger(log.FormatConsole, log.LevelInfo)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, logger)
 	logger = logger.With("key", "value")
 	logger.Info("test")

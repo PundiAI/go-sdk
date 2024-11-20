@@ -31,47 +31,47 @@ func NewZapLogger(format string, logLevel string) (Logger, error) {
 	return &ZapLogger{logger: logger.Sugar()}, nil
 }
 
-func (l *ZapLogger) With(k, v interface{}) Logger {
+func (l *ZapLogger) With(k, v any) Logger {
 	return &ZapLogger{logger: l.logger.With(k, v)}
 }
 
-func (l *ZapLogger) Debug(msg string, args ...interface{}) {
+func (l *ZapLogger) Debug(msg string, args ...any) {
 	l.logger.Debug(msg, args)
 }
 
-func (l *ZapLogger) Info(msg string, args ...interface{}) {
+func (l *ZapLogger) Info(msg string, args ...any) {
 	l.logger.Info(msg, args)
 }
 
-func (l *ZapLogger) Warn(msg string, args ...interface{}) {
+func (l *ZapLogger) Warn(msg string, args ...any) {
 	l.logger.Warn(msg, args)
 }
 
-func (l *ZapLogger) Error(msg string, args ...interface{}) {
+func (l *ZapLogger) Error(msg string, args ...any) {
 	l.logger.Error(msg, args)
 }
 
-func (l *ZapLogger) Panic(msg string, args ...interface{}) {
+func (l *ZapLogger) Panic(msg string, args ...any) {
 	l.logger.Panic(msg, args)
 }
 
-func (l *ZapLogger) Debugf(format string, args ...interface{}) {
+func (l *ZapLogger) Debugf(format string, args ...any) {
 	l.logger.Debugf(format, args...)
 }
 
-func (l *ZapLogger) Infof(format string, args ...interface{}) {
+func (l *ZapLogger) Infof(format string, args ...any) {
 	l.logger.Infof(format, args...)
 }
 
-func (l *ZapLogger) Warnf(format string, args ...interface{}) {
+func (l *ZapLogger) Warnf(format string, args ...any) {
 	l.logger.Warnf(format, args...)
 }
 
-func (l *ZapLogger) Errorf(format string, args ...interface{}) {
+func (l *ZapLogger) Errorf(format string, args ...any) {
 	l.logger.Errorf(format, args...)
 }
 
-func (l *ZapLogger) Panicf(format string, args ...interface{}) {
+func (l *ZapLogger) Panicf(format string, args ...any) {
 	l.logger.Panicf(format, args...)
 }
 

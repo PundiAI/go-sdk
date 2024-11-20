@@ -29,7 +29,7 @@ func NewMigration(logger log.Logger, config Config, db db.DB) *Server {
 	}
 }
 
-func (s *Server) Start(_ *errgroup.Group, _ context.Context) error {
+func (s *Server) Start(context.Context, *errgroup.Group) error {
 	if !s.config.Enabled {
 		return nil
 	}
@@ -61,6 +61,6 @@ func (s *Server) Start(_ *errgroup.Group, _ context.Context) error {
 	return nil
 }
 
-func (s *Server) Close() error {
+func (*Server) Close() error {
 	return nil
 }

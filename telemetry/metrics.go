@@ -60,7 +60,7 @@ func (s *Server) Gather(format string) (GatherResponse, error) {
 	}
 }
 
-func (s *Server) gatherPrometheus() (GatherResponse, error) {
+func (*Server) gatherPrometheus() (GatherResponse, error) {
 	metricsFamilies, err := prometheus.DefaultGatherer.Gather()
 	if err != nil {
 		return GatherResponse{}, fmt.Errorf("failed to gather prometheus metrics: %w", err)

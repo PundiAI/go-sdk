@@ -72,6 +72,6 @@ func (c Config) Check() error {
 	return nil
 }
 
-func (c Config) Name() string {
+func (Config) Name() string {
 	return "telemetry"
 }
