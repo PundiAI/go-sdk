@@ -34,7 +34,7 @@ func (s *Server) Start(context.Context, *errgroup.Group) error {
 		return nil
 	}
 
-	if err := s.config.Check(); err != nil {
+	if err := s.config.Validate(); err != nil {
 		return err
 	}
 	s.logger.Infof("enable migration server")
