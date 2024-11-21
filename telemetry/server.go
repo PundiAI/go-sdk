@@ -49,7 +49,7 @@ func (s *Server) Start(ctx context.Context, group *errgroup.Group) error { //nol
 		return nil
 	}
 
-	if err := s.config.Check(); err != nil {
+	if err := s.config.Validate(); err != nil {
 		return err
 	}
 	s.logger.Info("init telemetry server")

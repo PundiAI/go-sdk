@@ -26,15 +26,15 @@ func (c Config) String() string {
 	return fmt.Sprintf("chainId: %s, rpcUrl: %s", c.ChainId.String(), c.RpcUrl)
 }
 
-func (c Config) Check() error {
+func (c Config) Validate() error {
 	if c.ChainId == nil || c.ChainId.Sign() <= 0 {
-		return errors.New("check: chain_id is empty")
+		return errors.New("chain_id is empty")
 	}
 	if c.RpcUrl == "" {
-		return errors.New("check: rpc_url is empty")
+		return errors.New("rpc_url is empty")
 	}
 	if c.Timeout <= 0 || c.Timeout > 600*time.Second {
-		return errors.New("check: timeout is invalid, should be in (0, 600)s")
+		return errors.New("timeout is invalid, should be in (0, 600)s")
 	}
 	return nil
 }

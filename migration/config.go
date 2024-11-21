@@ -26,7 +26,7 @@ func (c Config) IsEnabled() bool {
 	return c.Enabled
 }
 
-func (Config) Check() error {
+func (Config) Validate() error {
 	return nil
 }
 

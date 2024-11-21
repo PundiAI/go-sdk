@@ -24,15 +24,15 @@ func NewDefConfig() Config {
 	}
 }
 
-func (c Config) Check() error {
+func (c Config) Validate() error {
 	if !c.Enabled {
 		return nil
 	}
 	if c.ListenAddr == "" {
-		return errors.New("check: listen addr is empty")
+		return errors.New("listen addr is empty")
 	}
 	if c.ReadTimeout < time.Millisecond {
-		return errors.New("check: read timeout is too small")
+		return errors.New("read timeout is too small")
 	}
 	return nil
 }
