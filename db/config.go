@@ -68,34 +68,34 @@ func (c Config) MarshalJSON() ([]byte, error) {
 	return json.Marshal(temp)
 }
 
-func (c Config) Check() error { //nolint:revive // cyclomatic
+func (c Config) Validate() error { //nolint:revive // cyclomatic
 	if c.Driver == "" {
-		return errors.New("check: driver is empty")
+		return errors.New("driver is empty")
 	}
 	driver, err := GetDriver(c.Driver)
 	if err != nil {
-		return errors.WithMessage(err, "check: driver is invalid")
+		return errors.WithMessage(err, "driver is invalid")
 	}
 	if err = driver.ParseSource(c.Source); err != nil {
-		return errors.WithMessage(err, "check: source is invalid")
+		return errors.WithMessage(err, "source is invalid")
 	}
 	if c.ConnMaxIdleTime < time.Second || c.ConnMaxIdleTime > time.Hour*24 {
-		return errors.New("check: conn_max_idle_time is invalid, must between 1 seconds and 24 hours")
+		return errors.New("conn_max_idle_time is invalid, must between 1 seconds and 24 hours")
 	}
 	if c.ConnMaxLifeTime < time.Second || c.ConnMaxLifeTime > time.Hour*24 {
-		return errors.New("check: conn_max_life_time is invalid, must between 1 seconds and 24 hours")
+		return errors.New("conn_max_life_time is invalid, must between 1 seconds and 24 hours")
 	}
 	if c.MaxIdleConn < 1 || c.MaxIdleConn > 500 {
-		return errors.New("check: max_idle_conn is invalid, must between 1 and 500")
+		return errors.New("max_idle_conn is invalid, must between 1 and 500")
 	}
 	if c.MaxOpenConn < 1 || c.MaxOpenConn > 500 {
-		return errors.New("check: max_open_conn is invalid, must between 1 and 500")
+		return errors.New("max_open_conn is invalid, must between 1 and 500")
 	}
 	if c.MaxOpenConn < c.MaxIdleConn {
-		return errors.New("check: max_open_conn must greater than max_idle_conn")
+		return errors.New("max_open_conn must greater than max_idle_conn")
 	}
 	if _, err = parseLogLevel(c.LogLevel); err != nil {
-		return errors.WithMessage(err, "check: log_level is invalid")
+		return errors.WithMessage(err, "log_level is invalid")
 	}
 	return nil
 }
