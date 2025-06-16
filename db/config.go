@@ -19,8 +19,6 @@ const (
 	LogLevelInfo   = "info"
 )
 
-type ConfigAlias Config
-
 type Config struct {
 	Driver          string        `yaml:"driver" mapstructure:"driver"`
 	Source          string        `yaml:"source" mapstructure:"source"`
