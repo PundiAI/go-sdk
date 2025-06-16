@@ -19,6 +19,8 @@ const (
 	LogLevelInfo   = "info"
 )
 
+type ConfigAlias Config
+
 type Config struct {
 	Driver          string        `yaml:"driver" mapstructure:"driver"`
 	Source          string        `yaml:"source" mapstructure:"source"`
@@ -63,7 +65,7 @@ func (c Config) MarshalYAML() (any, error) {
 }
 
 func (c Config) MarshalJSON() ([]byte, error) {
-	temp := c
+	temp := ConfigAlias(c)
 	temp.Source = SourceDesensitization(temp.Source)
 	return json.Marshal(temp)
 }
