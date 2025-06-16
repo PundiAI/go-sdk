@@ -1,0 +1,20 @@
+{
+  "client_factory": "msg_send",
+  "connections": 1,
+  "time": 300,
+  "send_period": 1,
+  "rate": 3000,
+  "size": 0,
+  "count": -1,
+  "broadcast_tx_method": "async",
+  "endpoints": [
+    "ws://127.0.0.1:26657/websocket"
+  ],
+  "endpoint_select_method": "supplied",
+  "expect_peers": 0,
+  "max_endpoints": 0,
+  "min_connectivity": 0,
+  "peer_connect_timeout": 600,
+  "stats_output_file": "",
+  "no_trap_interrupts": false
+}
