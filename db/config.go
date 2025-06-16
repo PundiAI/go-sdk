@@ -65,7 +65,8 @@ func (c Config) MarshalYAML() (any, error) {
 }
 
 func (c Config) MarshalJSON() ([]byte, error) {
-	temp := ConfigAlias(c)
+	type marshalConfig Config
+	temp := marshalConfig(c)
 	temp.Source = SourceDesensitization(temp.Source)
 	return json.Marshal(temp)
 }
