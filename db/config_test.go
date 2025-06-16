@@ -1,8 +1,10 @@
 package db_test
 
 import (
+	"encoding/json"
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/pundiai/go-sdk/db"
@@ -73,4 +75,9 @@ func TestSourceDesensitization(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestJsonMarshalIndent(t *testing.T) {
+	_, err := json.MarshalIndent(db.NewDefConfig(), "", "  ")
+	require.NoError(t, err)
 }
