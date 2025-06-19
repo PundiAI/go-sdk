@@ -56,6 +56,17 @@ func (d *BaseDao) UpdatesByID(id uint, data Model) error {
 	return nil
 }
 
+func (d *BaseDao) DeleteByID(id uint) error {
+	err := d.db.Model(d.model).
+		Where("id = ?", id).
+		RowsAffected(1).
+		Delete(nil)
+	if err != nil {
+		return errors.WithMessagef(err, "id: %d", id)
+	}
+	return nil
+}
+
 func (d *BaseDao) GetByID(id uint, result Model) (bool, error) {
 	found, err := d.db.Model(d.model).
 		Where("id = ?", id).
