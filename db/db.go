@@ -39,6 +39,7 @@ type DB interface {
 	Create(value any) error
 	Update(column string, value any) error
 	Updates(values any) error
+	Delete(value any, conds ...any) error
 
 	Transaction(fn func(tx DB) error) error
 
@@ -316,6 +317,19 @@ func (g *gDB) Updates(values any) error {
 	if g.rowsAffected > 0 && tx.RowsAffected != g.rowsAffected {
 		g.logger.Error("db updates error", "values", values, "rows affected", tx.RowsAffected)
 		return errors.Errorf("db updates error, rows affected: %d, expected: %d", tx.RowsAffected, g.rowsAffected)
+	}
+	return nil
+}
+
+func (g *gDB) Delete(value any, conds ...any) error {
+	tx := g.db.Delete(value, conds...)
+	if err := tx.Error; err != nil {
+		g.logger.Error("db delete error", "value", value, "conds", conds, "error", err)
+		return errors.Wrap(err, "db delete error")
+	}
+	if g.rowsAffected > 0 && tx.RowsAffected != g.rowsAffected {
+		g.logger.Error("db delete error", "value", value, "conds", conds, "rows affected", tx.RowsAffected)
+		return errors.Errorf("db delete error, rows affected: %d, expected: %d", tx.RowsAffected, g.rowsAffected)
 	}
 	return nil
 }

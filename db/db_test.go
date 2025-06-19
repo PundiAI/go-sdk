@@ -55,6 +55,21 @@ func (suite *DBTestSuite) TestFind() {
 	suite.Empty(modules)
 }
 
+func (suite *DBTestSuite) TestDelete() {
+	suite.Require().NoError(suite.db.Create(&gorm.Model{ID: 1}))
+	suite.Require().NoError(suite.db.Create(&gorm.Model{ID: 2}))
+	suite.Require().NoError(suite.db.Create(&gorm.Model{ID: 3}))
+	err := suite.db.Delete(&gorm.Model{}, "id", 1)
+	suite.Require().NoError(err)
+	var found bool
+	found, err = suite.db.Where("id", 1).First(&gorm.Model{})
+	suite.Require().NoError(err)
+	suite.False(found)
+	found, err = suite.db.Where("id", 2).First(&gorm.Model{})
+	suite.Require().NoError(err)
+	suite.True(found)
+
+}
 func TestDBTestSuite(t *testing.T) {
 	suite.Run(t, new(DBTestSuite))
 }
