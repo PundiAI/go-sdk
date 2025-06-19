@@ -68,8 +68,8 @@ func (suite *DBTestSuite) TestDelete() {
 	found, err = suite.db.Where("id", 2).First(&gorm.Model{})
 	suite.Require().NoError(err)
 	suite.True(found)
-
 }
+
 func TestDBTestSuite(t *testing.T) {
 	suite.Run(t, new(DBTestSuite))
 }
