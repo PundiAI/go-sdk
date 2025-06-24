@@ -18,12 +18,12 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.9.0
 	go.uber.org/zap v1.25.0
-	golang.org/x/sync v0.8.0
+	golang.org/x/sync v0.9.0
 	gopkg.in/yaml.v3 v3.0.1
-	gorm.io/driver/mysql v1.5.1
+	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/sqlite v1.5.2
-	gorm.io/gorm v1.25.3
-	gorm.io/plugin/dbresolver v1.4.3
+	gorm.io/gorm v1.26.0
+	gorm.io/plugin/dbresolver v1.6.0
 	gorm.io/plugin/prometheus v0.0.0-20230504115745-1aec2356381b
 )
 
@@ -120,7 +120,7 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sys v0.23.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/text v0.20.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
