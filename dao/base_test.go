@@ -10,11 +10,11 @@ import (
 	"github.com/pundiai/go-sdk/dao"
 	"github.com/pundiai/go-sdk/db"
 	"github.com/pundiai/go-sdk/log"
-	"github.com/pundiai/go-sdk/modules"
+	"github.com/pundiai/go-sdk/model"
 )
 
 type TestModel struct {
-	modules.Base `gorm:"embedded"`
+	model.Base `gorm:"embedded"`
 
 	Name   string `gorm:"index:,unique; column:name; type:varchar(20); not null; comment:task name"`
 	Number uint64 `gorm:"column:number; type:bigint(20);not null;comment:block number"`
@@ -89,8 +89,8 @@ func (s *DaoTestSuite) TestUpdatesByID() {
 	s.Require().True(found)
 
 	s.Require().Equal(data.GetId(), actualData.GetId())
-	actualData.Base = modules.Base{}
-	updateData.Base = modules.Base{}
+	actualData.Base = model.Base{}
+	updateData.Base = model.Base{}
 	s.Require().EqualValues(updateData, actualData)
 }
 
