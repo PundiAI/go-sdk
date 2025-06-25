@@ -53,7 +53,7 @@ func NewRPCClient(ctx context.Context, logger log.Logger, config Config) (RPCCli
 		config: config,
 		Client: ethclient.NewClient(c),
 	}
-	return rpcClient, rpcClient.check(ctx)
+	return rpcClient, rpcClient.validate(ctx)
 }
 
 type client struct {
@@ -62,7 +62,7 @@ type client struct {
 	config Config
 }
 
-func (c *client) check(ctx context.Context) error {
+func (c *client) validate(ctx context.Context) error {
 	id, err := c.ChainID(ctx)
 	if err != nil {
 		return errors.Wrap(err, "get chain id")

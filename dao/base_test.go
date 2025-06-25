@@ -10,7 +10,7 @@ import (
 	"github.com/pundiai/go-sdk/dao"
 	"github.com/pundiai/go-sdk/db"
 	"github.com/pundiai/go-sdk/log"
-	"github.com/pundiai/go-sdk/modules"
+	"github.com/pundiai/go-sdk/model"
 )
 
 type TestModel struct {
