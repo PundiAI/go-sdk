@@ -1,4 +1,4 @@
-package modules
+package model
 
 import (
 	"time"
@@ -10,6 +10,14 @@ type Base struct {
 	UpdatedAt time.Time `json:"updated_at" gorm:"comment:update time"`
 }
 
-func (v *Base) GetId() uint {
-	return v.ID
+func (b *Base) GetId() uint {
+	return b.ID
+}
+
+func (b *Base) GetCreatedTimestamp() int64 {
+	return b.CreatedAt.UnixMilli()
+}
+
+func (b *Base) GetUpdatedTimestamp() int64 {
+	return b.UpdatedAt.UnixMilli()
 }
