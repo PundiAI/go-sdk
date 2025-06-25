@@ -9,7 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/peterh/liner v1.1.1-0.20190123174540-a2c9a5303de7
+	github.com/peterh/liner v1.2.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.22.0
 	github.com/prometheus/common v0.62.0
