@@ -13,12 +13,14 @@ type Config struct {
 	RpcUrl            string        `yaml:"rpc_url" mapstructure:"rpc_url"`
 	EnabledRequestLog bool          `yaml:"enabled_request_log" mapstructure:"enabled_request_log"`
 	Timeout           time.Duration `yaml:"timeout" mapstructure:"timeout"`
+	EnableValidate    bool          `yaml:"enable_validate" mapstructure:"enable_validate"`
 }
 
 func NewDefConfig() Config {
 	return Config{
 		EnabledRequestLog: false,
 		Timeout:           10 * time.Second,
+		EnableValidate:    true,
 	}
 }
 
