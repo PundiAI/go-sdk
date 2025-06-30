@@ -53,7 +53,10 @@ func NewRPCClient(ctx context.Context, logger log.Logger, config Config) (RPCCli
 		config: config,
 		Client: ethclient.NewClient(c),
 	}
-	return rpcClient, rpcClient.validate(ctx)
+	if config.EnableValidate {
+		err = rpcClient.validate(ctx)
+	}
+	return rpcClient, err
 }
 
 type client struct {
