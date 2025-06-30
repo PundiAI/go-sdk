@@ -2,13 +2,11 @@ package eth
 
 import (
 	"context"
-	"math/big"
 	"net/http"
 	"net/http/httputil"
 
 	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind/v2"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/pkg/errors"
@@ -17,18 +15,20 @@ import (
 )
 
 type RPCClient interface {
-	ChainID(ctx context.Context) (*big.Int, error)
-	BlockNumber(ctx context.Context) (uint64, error)
-	BlockByNumber(ctx context.Context, number *big.Int) (*types.Block, error)
-
 	bind.ContractCaller
 	bind.PendingContractCaller
+	bind.BlockHashContractCaller
 	bind.ContractTransactor
-	bind.ContractFilterer
 	bind.DeployBackend
-	bind.ContractBackend
+	bind.ContractFilterer
 
 	ethereum.ChainStateReader
+	ethereum.ChainReader
+	ethereum.FeeHistoryReader
+	ethereum.PendingStateReader
+	ethereum.PendingContractCaller
+	ethereum.ChainIDReader
+	ethereum.BlockNumberReader
 
 	Close()
 }
