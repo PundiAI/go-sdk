@@ -6,7 +6,7 @@ require (
 	github.com/armon/go-metrics v0.4.1
 	github.com/ethereum/go-ethereum v1.15.11
 	github.com/go-resty/resty/v2 v2.16.5
-	github.com/go-sql-driver/mysql v1.8.1
+	github.com/go-sql-driver/mysql v1.9.3
 	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/peterh/liner v1.1.1-0.20190123174540-a2c9a5303de7
