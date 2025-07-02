@@ -113,7 +113,7 @@ func NewMemoryDB(logLevel, name string) DB {
 	}
 	config := NewDefConfig()
 	config.Driver = SqliteDriver
-	config.Source = fmt.Sprintf("file:%s.db?mode=memory", name)
+	config.Source = fmt.Sprintf("file:%s.db?mode=memory&cache=shared", name)
 	config.LogLevel = logLevel
 	db, err := NewDB(context.Background(), l, config)
 	if err != nil {
