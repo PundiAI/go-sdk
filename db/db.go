@@ -5,6 +5,7 @@ import (
 	"fmt"
 	golog "log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/pkg/errors"
@@ -106,14 +107,15 @@ func NewDB(_ context.Context, l log.Logger, config Config) (DB, error) {
 	return newGDB(l, &config, db, driver, 0), nil
 }
 
-func NewMemoryDB(logLevel, name string) DB {
+func NewMemoryDB(logLevel, name string, arg ...string) DB {
 	l, err := log.NewLogger(log.FormatConsole, logLevel)
 	if err != nil {
 		panic(err)
 	}
+	arg = append(arg, "mode=memory")
 	config := NewDefConfig()
 	config.Driver = SqliteDriver
-	config.Source = fmt.Sprintf("file:%s.db?mode=memory&cache=shared", name)
+	config.Source = fmt.Sprintf("file:%s.db?%s", name, strings.Join(arg, "&"))
 	config.LogLevel = logLevel
 	db, err := NewDB(context.Background(), l, config)
 	if err != nil {
