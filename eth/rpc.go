@@ -29,6 +29,7 @@ type RPCClient interface {
 	ethereum.PendingContractCaller
 	ethereum.ChainIDReader
 	ethereum.BlockNumberReader
+	ethereum.TransactionReader
 
 	Close()
 }
