@@ -1,6 +1,6 @@
 module github.com/pundiai/go-sdk
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/armon/go-metrics v0.4.1
@@ -18,7 +18,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 	go.uber.org/zap v1.27.0
-	golang.org/x/sync v0.15.0
+	golang.org/x/sync v0.17.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/driver/sqlite v1.6.0
